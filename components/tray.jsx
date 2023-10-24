@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 import React from "react";
 
 const getData = async (page) => {
@@ -15,7 +16,7 @@ const getData = async (page) => {
 
 const Tray = async ({ page }) => {
   const data = await getData(page);
-  console.log(data);
+  // console.log(data);
 
   return (
     <div className="w-full h-full">
@@ -42,8 +43,12 @@ const Tray = async ({ page }) => {
                 className="object-cover rounded-md"
               />
             )}
-            <p className="pt-5"> {item.title}</p>
+            <Link href={`/posts/${item.slug}`}>{item.title}</Link>
             <p className="pt-5"> {item.desc}</p>
+            <p className="px-3 py-1 my-4 bg-primary w-fit rounded-md text-[10px]">
+              {item.catSlug}
+            </p>
+            <Link href={`/posts/${item.slug}`}>view</Link>
           </div>
         ))}
       </div>

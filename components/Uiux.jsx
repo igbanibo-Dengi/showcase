@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 import React from "react";
 
 const getData = async (page) => {
@@ -46,8 +47,12 @@ const Uiux = async (page) => {
               className="object-cover rounded-md"
             />
           )}
-          <p className="pt-5"> {item.title}</p>
+          <Link href={`/posts/${item.slug}`}>{item.title}</Link>
           <p className="pt-5"> {item.desc}</p>
+          <p className="px-3 py-1 my-4 bg-primary w-fit rounded-md text-[10px]">
+            {item.catSlug}
+          </p>
+          <Link href={`/posts/${item.slug}`}>view</Link>
         </div>
       ))}
     </div>

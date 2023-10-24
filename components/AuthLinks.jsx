@@ -1,15 +1,11 @@
-import Link from "next/link";
 import React from "react";
-import { Button } from "./ui/button";
 import NavDropDown from "./ui/navDropDown";
-import { useSession, signOut } from "next-auth/react";
+import { useSession } from "next-auth/react";
 
 import {
   AlertDialog,
-  AlertDialogAction,
   AlertDialogCancel,
   AlertDialogContent,
-  AlertDialogDescription,
   AlertDialogFooter,
   AlertDialogHeader,
   AlertDialogTitle,
@@ -20,7 +16,7 @@ import LoginModal from "./loginModal";
 const AuthLinks = () => {
   const { status } = useSession();
 
-  console.log(status);
+  // console.log(status);
 
   return (
     <div className="flex gap-5 items-center">
