@@ -41,13 +41,12 @@ const Comments = ({ postSlug }) => {
 
     mutate();
     setDesc("");
-
   };
 
-  console.log(data);
+  // console.log(data);
   const comments = data?.reverse();
 
-  console.log(comments);
+  // console.log(comments);
   return (
     <section className="my-10 flex flex-col w-full max-w-[800px] mx-auto ">
       {status === "unauthenticated" ? (

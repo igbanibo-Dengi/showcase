@@ -3,9 +3,20 @@
 import Image from "next/image";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
-import { useRouter } from "next/router";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { useSession } from "next-auth/react";
+import { Button } from "@/components/ui/button";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
 
 const getData = async () => {
   try {
@@ -26,25 +37,44 @@ const getData = async () => {
 
 const Page = () => {
   const status = useSession();
-  console.log(status);
+  // console.log(status);
   if (status === "unauthenticated") {
     router.push("/");
   }
   const [data, setData] = useState(null);
   const [error, setError] = useState(null);
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const result = await getData();
-        setData(result);
-      } catch (error) {
-        setError(error.message);
-      }
-    };
+  const fetchData = async () => {
+    try {
+      const result = await getData();
+      setData(result);
+    } catch (error) {
+      setError(error.message);
+    }
+  };
 
-    fetchData();
-  }, []); // Empty dependency array to ensure useEffect runs only once on mount
+  useEffect(() => {
+    fetchData(); // Initial data fetching
+
+    // Empty dependency array to ensure useEffect runs only once on mount
+  }, []);
+
+  const handleDeletePost = async (slug) => {
+    try {
+      const res = await fetch(`/api/posts/${slug}`, {
+        method: "DELETE",
+      });
+
+      if (!res.ok) {
+        throw new Error("Failed to delete post");
+      }
+
+      // Update the state to reflect the changes (e.g., refetch data)
+      fetchData();
+    } catch (error) {
+      console.error("Error deleting post:", error.message);
+    }
+  };
 
   return (
     <div>
@@ -82,7 +112,38 @@ const Page = () => {
                     />
                   )}
                   <p>{item.title}</p>
-                  <Link href={`/posts/${item.slug}`}>view</Link>
+                  <div className="flex w-full justify-between">
+                    <Button asChild>
+                      <Link href={`/posts/${item.slug}`}>view</Link>
+                    </Button>
+                    <AlertDialog>
+                      <AlertDialogTrigger>
+                        <Button className="bg-red-500 hover:bg-red-700">
+                          Delete post
+                        </Button>
+                      </AlertDialogTrigger>
+                      <AlertDialogContent>
+                        <AlertDialogHeader>
+                          <AlertDialogTitle>
+                            Are you absolutely sure?
+                          </AlertDialogTitle>
+                          <AlertDialogDescription>
+                            This action cannot be undone. This will permanently
+                            delete your account and remove your data from our
+                            servers.
+                          </AlertDialogDescription>
+                        </AlertDialogHeader>
+                        <AlertDialogFooter>
+                          <AlertDialogCancel>Cancel</AlertDialogCancel>
+                          <AlertDialogAction
+                            onClick={() => handleDeletePost(item.slug)}
+                          >
+                            Delete
+                          </AlertDialogAction>
+                        </AlertDialogFooter>
+                      </AlertDialogContent>
+                    </AlertDialog>
+                  </div>
                 </div>
               ))
             ) : (

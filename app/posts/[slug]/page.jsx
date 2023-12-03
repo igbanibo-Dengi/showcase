@@ -20,7 +20,7 @@ const page = async ({ params }) => {
 
   const data = await getData(slug);
 
-  console.log(data.Post);
+  // console.log(data.Post);
   return (
     <div className=" container flex flex-col  justify-center items-center pt-20 overflow-y-auto">
       <div className="flex flex-col md:flex-row gap-3">
