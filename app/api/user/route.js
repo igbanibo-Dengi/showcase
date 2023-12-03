@@ -3,13 +3,21 @@ import { NextResponse } from "next/server";
 
 export const GET = async () => {
   try {
-    const user = await prisma.user.findMany();
+    // Fetching all users along with their posts
+    const usersWithPosts = await prisma.user.findMany({
+      include: {
+        Post: true, // Include the posts related to each user
+      },
+    });
 
-    return new NextResponse(JSON.stringify(user, { status: 200 }));
+    // Extracting only the posts from the result
+    // const posts = usersWithPosts.map((user) => user.Post);
+
+    return new NextResponse(JSON.stringify(usersWithPosts, { status: 200 }));
   } catch (err) {
     console.log(err);
     return new NextResponse(
-      JSON.stringify({ message: "Something went wrongly!" }, { status: 500 })
+      JSON.stringify({ message: "Something went wrong!" }, { status: 500 })
     );
   }
 };

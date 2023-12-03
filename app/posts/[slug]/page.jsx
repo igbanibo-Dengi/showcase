@@ -20,7 +20,7 @@ const page = async ({ params }) => {
 
   const data = await getData(slug);
 
-  // console.log(data.user.name);
+  console.log(data.Post);
   return (
     <div className=" container flex flex-col  justify-center items-center pt-20 overflow-y-auto">
       <div className="flex flex-col md:flex-row gap-3">
@@ -45,12 +45,12 @@ const page = async ({ params }) => {
           <p>{data.title}</p>
           <p>{data.desc}</p>
           <p>{data.catSlug}</p>
-          <span className="flex gap-3">
-            <p>{data?.user.name}</p>
+          <span className="flex gap-3 items-center">
             <Avatar>
               <AvatarImage src={data?.user.image} />
               <AvatarFallback>CN</AvatarFallback>
             </Avatar>
+            <p>{data?.user.name}</p>
           </span>
         </div>
       </div>

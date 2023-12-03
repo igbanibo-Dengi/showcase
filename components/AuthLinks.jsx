@@ -12,6 +12,8 @@ import {
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
 import LoginModal from "./loginModal";
+import { Button } from "./ui/button";
+import Link from "next/link";
 
 const AuthLinks = () => {
   const { status } = useSession();
@@ -69,8 +71,13 @@ const AuthLinks = () => {
           </AlertDialog>
         </>
       ) : (
-        <span>
+        <span className="flex items-center gap-3">
           <NavDropDown />
+          <Link href="/create">
+            <Button className="bg-white text-primary hover:bg-white/80">
+              New post
+            </Button>
+          </Link>
         </span>
       )}
     </div>

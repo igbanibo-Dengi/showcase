@@ -41,7 +41,7 @@ const IconSideBar = ({ isHidden, data }) => {
 
         {data?.map((item) => (
           <Link
-            key={item._id}
+            key={item.slug}
             href={`/${item.slug}`}
             className={
               pathname === `/${item.slug}`

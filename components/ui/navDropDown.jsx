@@ -1,3 +1,4 @@
+"use client";
 import { AiOutlineRight } from "react-icons/ai";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
@@ -17,11 +18,12 @@ import {
 } from "@/components/ui/dropdown-menu";
 
 import { signOut, useSession } from "next-auth/react";
+import Link from "next/link";
 
 const NavDropDown = () => {
   const { data: session } = useSession();
 
-  // console.log(session.user);
+  // console.log(session);
   return (
     <div className="flex gap-3">
       <DropdownMenu>
@@ -51,10 +53,19 @@ const NavDropDown = () => {
           <DropdownMenuLabel>My Account</DropdownMenuLabel>
           <DropdownMenuSeparator />
           <DropdownMenuGroup>
-            <DropdownMenuItem>Profile</DropdownMenuItem>
+            <DropdownMenuItem>
+              <Link href="/profile" className="w-full">
+                Profile
+              </Link>
+            </DropdownMenuItem>
             <DropdownMenuSeparator />
 
-            <DropdownMenuItem onClick={signOut}>Log out</DropdownMenuItem>
+            <DropdownMenuItem
+              onClick={signOut}
+              className="w-full cursor-pointer"
+            >
+              Log out
+            </DropdownMenuItem>
           </DropdownMenuGroup>
           <DropdownMenuSeparator />
         </DropdownMenuContent>
