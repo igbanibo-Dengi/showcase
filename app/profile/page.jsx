@@ -17,6 +17,7 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
+import UpdateUsernameForm from "@/components/UpdateUsernameForm";
 
 const getData = async () => {
   try {
@@ -78,6 +79,9 @@ const Page = () => {
 
   return (
     <div>
+      <div>
+        <UpdateUsernameForm />
+      </div>
       {error ? (
         <p>Error: {error}</p>
       ) : data ? (
